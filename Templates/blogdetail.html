@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+	<h4>Title: {{blogobject.title}}</h4>
+	<img src="{{blogobject.image.url}}" width="500">
+	<p>{{blogobject.content}}</p>
+	<p>created on: <span>{{blogobject.date}}</span></p>
+
+<h3>Leave your comment</h3>
+			<p>Please write your comment here.</p>
+			<form method="POST" action="/blog/{{blogobject.id}}/comment/">
+				{% csrf_token %}
+				{{commentform.as_p}}
+				<button>Comment</button>
+			</form>
+
+<h4>All comments</h4>
+
+{% for comment in blogobject.comment_set.all %}
+	<li>{{comment.commenter}}</li>
+	<p>{{comment.comment}}</p>
+	<p>{{comment.date}}</p>
+	<a href="{% url 'blogapp:commentdelete' comment.id %}">DElete</a>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Signup Form</h4>
+<form method = "POST">
+	{% csrf_token %}
+	<p id="errorp"></p>
+	{{form.as_p}}
+	<button id="btn">Signup</button>
+	</form>
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*alert("Jquery worked");*/
+		$("#id_username").on("change",function(){
+			/*alert("username changed");*/
+			var a = $(this).val();
+			/*alert(a)*/
+			$.ajax({
+				method:"get",
+				url:"{% url 'blogapp:usernamechecker' %}",
+				data: {
+					"uname":a
+				}, 
+				success: function(data)
+				{
+					/*alert("success");*/
+					/*alert(data.response);*/
+					if(data.response=="yes"){
+						$("#errorp").text("Username not available");
+						$("#errorp").css("color","red");
+						$("#btn").attr("disabled","true");
+					}
+					else{
+						$("#errorp").text("Username available");
+						$("#errorp").css("color","green");
+						$("#btn").removeAttr("disabled");	
+					}
+
+				}
+			})
+		})
+
+	})
+</script>
+{% endblock %}
+

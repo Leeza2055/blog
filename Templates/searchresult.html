@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Seach Results</h3>
+<hr>
+{% for blog in searched_blogs %}
+<li><a href="{% url 'blogapp:blogdetail' blog.pk %}">{{blog.title}}</a></li>
+{% empty %}
+<h5>No results found...</h5>
+{% endfor %}
+{% endblock %}

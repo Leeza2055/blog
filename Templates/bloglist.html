@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>All blogs</h3>
+{% for blog in allblogs %}
+<li><h4>{{blog.title}}</h4></li>
+<a href="{% url 'blogapp:blogdetail' blog.id %}">read more</a>
+<img src="{{blog.image.url}}" width = "100">
+<p>Created by <span style = "color:blue;">{{blog.author.username}}</span> {{blog.date|timesince}} ago </p>
+<a href="{% url 'blogapp:blogupdate' blog.id %}">Update</a>
+<a href="{% url 'blogapp:blogdelete' blog.id %}">Delete</a>
+
+{% endfor %}
+{% endblock %}
